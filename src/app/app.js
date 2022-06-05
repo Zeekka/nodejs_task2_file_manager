@@ -32,8 +32,6 @@ class FileManager {
         console.log('You are currently in ' + this.currentDir);
 
         process.stdin.on('data', (command) => {
-            console.log('You are currently in ' + this.currentDir);
-
             const parsedCommand = command.toString().replace('\n', '').split(' '),
                 commandName = parsedCommand[0],
                 commandArgs = parsedCommand.slice(1);
@@ -42,7 +40,7 @@ class FileManager {
         });
     }
 
-    runCommand(command, commandArgs) {
+    async runCommand(command, commandArgs) {
         const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
         try {
@@ -60,6 +58,8 @@ class FileManager {
                 if (response.newContext) {
                     this.updateContext(response.newContext)
                 }
+
+                console.log('\nYou are currently in ' + this.currentDir);
             }).on('error', () => {
                 console.log('Operation failed');
             });
