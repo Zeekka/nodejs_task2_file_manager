@@ -1,8 +1,6 @@
 import {readdir} from 'node:fs/promises';
 import {workerData, parentPort} from 'node:worker_threads';
 
-const STATUS_SUCCESS = 0;
-
 export const ls = async () => {
     const listResult = await readdir(workerData.currentDir).catch(err => err);
 
@@ -14,7 +12,7 @@ export const ls = async () => {
         commandResult: listResult.join(' '),
     });
 
-    return STATUS_SUCCESS;
+    return 0;
 };
 
 ls();

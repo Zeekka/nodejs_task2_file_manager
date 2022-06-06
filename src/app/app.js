@@ -27,9 +27,13 @@ class FileManager {
         this.currentDir = newContext.currentDir;
     }
 
+    printCurrentDir() {
+        console.log('You are currently in ' + this.currentDir);
+    }
+
     run() {
         console.log('Welcome to the File Manager ' + this.username);
-        console.log('You are currently in ' + this.currentDir);
+        this.printCurrentDir();
 
         process.stdin.on('data', (command) => {
             const parsedCommand = command.toString().replace('\n', '').split(' '),
@@ -59,9 +63,10 @@ class FileManager {
                     this.updateContext(response.newContext)
                 }
 
-                console.log('\nYou are currently in ' + this.currentDir);
+                this.printCurrentDir();
             }).on('error', () => {
                 console.log('Operation failed');
+                this.printCurrentDir();
             });
         } catch (err) {
             console.log('Operation failed');

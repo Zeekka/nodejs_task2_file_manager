@@ -1,8 +1,6 @@
 import {workerData, parentPort} from 'node:worker_threads';
 import {join} from 'node:path';
 
-const STATUS_SUCCESS = 0;
-
 export const up = async () => {
     const dirs = workerData.currentDir.split('/').filter((dir) => dir);
 
@@ -19,7 +17,7 @@ export const up = async () => {
         }
     });
 
-    return STATUS_SUCCESS;
+    return 0;
 };
 
 up();
