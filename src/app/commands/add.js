@@ -7,7 +7,7 @@ export const add = async () => {
     const accessResult = await access(newDest).catch(err => err);
 
     if (!accessResult) {
-        throw new Error('Operation failed');
+        throw new Error('Invalid input');
     }
 
     try {

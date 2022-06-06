@@ -82,8 +82,12 @@ class FileManager {
                 }
 
                 this.printCurrentDir();
-            }).on('error', () => {
-                console.log('Operation failed');
+            }).on('error', (error) => {
+                if (error.code === 'MODULE_NOT_FOUND') {
+                    error.message = 'Invalid input';
+                }
+
+                console.log(error.message);
                 this.printCurrentDir();
             });
         } catch (err) {
