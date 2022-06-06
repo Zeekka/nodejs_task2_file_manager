@@ -14,3 +14,17 @@ export const assemblePathForSingleArg = async (currentDir, args) =>  {
 
     return newDest;
 }
+
+export const assemblePathForTwoArgs = async (currentDir, args) =>  {
+    if (args.length !== 2) {
+        throw new Error('Operation failed');
+    }
+
+    const dest = await assemblePathForSingleArg(currentDir, args.splice(-1));
+    const src = await assemblePathForSingleArg(currentDir, args.splice(-1));
+
+    return {
+        src: src,
+        dest: dest
+    }
+}
