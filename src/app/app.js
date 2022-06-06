@@ -27,21 +27,39 @@ class FileManager {
         this.currentDir = newContext.currentDir;
     }
 
+    printWelcomeMessage() {
+        console.log('Welcome to the File Manager ' + this.username);
+    }
+
     printCurrentDir() {
         console.log('You are currently in ' + this.currentDir);
     }
 
+    printByeMessage() {
+        console.log(`Thank you for using File Manager, ${this.username}!`);
+    }
+
     run() {
-        console.log('Welcome to the File Manager ' + this.username);
+        this.printWelcomeMessage();
         this.printCurrentDir();
 
         process.stdin.on('data', (command) => {
-            const parsedCommand = command.toString().replace('\n', '').split(' '),
+            const parsedCommand = command.toString().trim().split(' '),
                 commandName = parsedCommand[0],
                 commandArgs = parsedCommand.slice(1);
 
+            if (commandName === '.exit') {
+                this.printByeMessage();
+                process.exit();
+            }
+
             this.runCommand(commandName, commandArgs);
         });
+
+        process.on('SIGINT', () => {
+            this.printByeMessage();
+            process.exit();
+        })
     }
 
     async runCommand(command, commandArgs) {
