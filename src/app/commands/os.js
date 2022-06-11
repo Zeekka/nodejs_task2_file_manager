@@ -12,7 +12,11 @@ export const os = async () => {
 
     switch (arg) {
         case '--EOL' : requestedInfo = nos.EOL.replace('\n', '\\n').replace('\r', '\\r'); break;
-        case '--cpus': requestedInfo = nos.cpus(); break;
+        case '--cpus': requestedInfo = nos.cpus().map(value => {
+                delete value['times'];
+                value['speed'] /= 1000;
+                return value;
+            }); break;
         case '--homedir': requestedInfo = nos.homedir(); break;
         case '--username': requestedInfo = nos.hostname(); break;
         case '--architecture': requestedInfo = nos.arch(); break;
