@@ -1,20 +1,21 @@
 import {workerData, parentPort} from 'node:worker_threads';
 import {assemblePathForSingleArg} from '../helpers/composers.js';
-import {readFile} from 'node:fs/promises';
+import {open} from 'node:fs/promises';
 
 export const cat = async () => {
-    const dest = await assemblePathForSingleArg(workerData.currentDir, workerData.args);
+    const src = await assemblePathForSingleArg(workerData.currentDir, workerData.args);
+    const fd = await open(src).catch(err => err);
 
-    const readResult = await readFile(dest, {
-        encoding: "UTF8",
-    }).catch(err => err);
-
-    if (readResult instanceof Error) {
+    if (fd instanceof Error) {
         throw new Error('Operation failed');
     }
 
-    parentPort.postMessage({
-        commandResult: readResult,
+    const readStream = fd.createReadStream();
+
+    readStream.on('data', chunk => {
+        parentPort.postMessage({
+            commandResult: chunk.toString(),
+        });
     });
 
     return 0;

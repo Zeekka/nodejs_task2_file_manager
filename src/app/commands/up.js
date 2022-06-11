@@ -1,8 +1,8 @@
 import {workerData, parentPort} from 'node:worker_threads';
-import {join} from 'node:path';
+import {join, sep} from 'node:path';
 
 export const up = async () => {
-    const dirs = workerData.currentDir.split('/').filter((dir) => dir);
+    const dirs = workerData.currentDir.split(sep).filter((dir) => dir);
 
     if (dirs.length === 0) {
         throw new Error('Operation failed');
@@ -12,7 +12,7 @@ export const up = async () => {
 
     parentPort.postMessage({
         newContext: {
-            currentDir: dirs.length === 0 ? '/' : '/' + join(...dirs),
+            currentDir: dirs.length === 0 ? sep : sep + join(...dirs),
             username: workerData.username,
         }
     });

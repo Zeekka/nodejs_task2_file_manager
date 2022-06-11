@@ -16,7 +16,7 @@ export const os = async () => {
         case '--homedir': requestedInfo = nos.homedir(); break;
         case '--username': requestedInfo = nos.hostname(); break;
         case '--architecture': requestedInfo = nos.arch(); break;
-        default: throw new Error('Operation failed');
+        default: throw new Error('Invalid input');
     }
 
     parentPort.postMessage({

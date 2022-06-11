@@ -5,7 +5,7 @@ import path from 'node:path';
 
 export const rn = async () => {
     if (workerData.args.length !== 2) {
-        throw new Error('Operation failed');
+        throw new Error('Invalid input');
     }
 
     const newFileName = workerData.args.splice(-1).pop();
