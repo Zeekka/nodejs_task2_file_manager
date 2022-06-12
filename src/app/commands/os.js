@@ -4,7 +4,7 @@ import * as nos from 'node:os';
 export const os = async () => {
     const argRegExp = /^--/;
     if (workerData.args.length !== 1 || !argRegExp.test(workerData.args[0])) {
-        throw new Error('Operation failed');
+        throw new Error('Invalid input');
     }
 
     const arg = workerData.args.pop();
